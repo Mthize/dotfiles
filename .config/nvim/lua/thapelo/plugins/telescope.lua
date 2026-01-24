@@ -1,3 +1,6 @@
+-- vim is a global provided by Neovim
+---@diagnostic disable: undefined-global
+
 return {
   "nvim-telescope/telescope.nvim",
   branch = "0.1.x",

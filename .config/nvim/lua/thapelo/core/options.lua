@@ -1,3 +1,6 @@
+-- vim is a global provided by Neovim
+---@diagnostic disable: undefined-global
+
 -- Set netrw listing style using vim.cmd to run Vimscript command
 vim.cmd("let g:netrw_liststyle = 3")
 

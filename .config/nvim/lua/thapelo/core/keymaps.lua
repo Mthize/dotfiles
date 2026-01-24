@@ -1,3 +1,6 @@
+-- vim is a global provided by Neovim
+---@diagnostic disable: undefined-global
+
 -- set leader key to space
 vim.g.mapleader = " "
 

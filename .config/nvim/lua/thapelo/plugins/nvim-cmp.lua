@@ -20,19 +20,24 @@ return {
 		local lspkind = require("lspkind")
 		local suggestion = require("supermaven-nvim.completion_preview")
 
-		-- Initialize Supermaven first
-		require("supermaven-nvim").setup({
-			keymaps = {
-				accept_suggestion = "<M-l>", -- Alt+l for full suggestion
-				accept_word = "<M-j>", -- Alt+j for single word
-				clear_suggestion = "<M-k>", -- Alt+k to clear
-			},
-			ignore_filetypes = { "cpp", "markdown" },
-			color = { suggestion_color = "#FFD700" }, -- Gold color for visibility
-			disable_keymaps = true, -- We'll handle keymaps ourselves
+		-- Stabilize LuaSnip
+		luasnip.config.setup({
+			region_check_events = "CursorHold,InsertLeave",
+			delete_check_events = "TextChanged,InsertLeave",
 		})
 
-		-- Load snippets
+		-- Supermaven setup
+		require("supermaven-nvim").setup({
+			keymaps = {
+				accept_suggestion = "<M-l>",
+				accept_word = "<M-j>",
+				clear_suggestion = "<M-k>",
+			},
+			ignore_filetypes = { "cpp", "markdown" },
+			color = { suggestion_color = "#FFD700" },
+			disable_keymaps = true,
+		})
+
 		require("luasnip.loaders.from_vscode").lazy_load()
 
 		cmp.setup({
@@ -43,14 +48,14 @@ return {
 					cmp.TriggerEvent.InsertEnter,
 				},
 			},
+
 			snippet = {
 				expand = function(args)
 					luasnip.lsp_expand(args.body)
 				end,
 			},
+
 			mapping = cmp.mapping.preset.insert({
-				-- Enhanced Tab behavior with priority:
-				-- 1. CMP selection 2. Snippet expansion 3. Supermaven
 				["<Tab>"] = cmp.mapping(function(fallback)
 					if cmp.visible() then
 						cmp.select_next_item()
@@ -73,8 +78,7 @@ return {
 					end
 				end, { "i", "s" }),
 
-				-- Dedicated Supermaven keys
-				["<M-l>"] = cmp.mapping(function() -- Alt+l accepts full suggestion
+				["<M-l>"] = cmp.mapping(function()
 					if suggestion.has_suggestion() then
 						suggestion.on_accept_suggestion()
 					else
@@ -82,7 +86,7 @@ return {
 					end
 				end),
 
-				["<M-j>"] = cmp.mapping(function() -- Alt+j accepts word
+				["<M-j>"] = cmp.mapping(function()
 					if suggestion.has_suggestion() then
 						suggestion.on_accept_word()
 					else
@@ -90,11 +94,10 @@ return {
 					end
 				end),
 
-				["<M-k>"] = cmp.mapping(function() -- Alt+k clears suggestion
+				["<M-k>"] = cmp.mapping(function()
 					suggestion.clear_suggestion()
 				end),
 
-				-- Preserved existing keybinds
 				["<C-k>"] = cmp.mapping.select_prev_item(),
 				["<C-b>"] = cmp.mapping.scroll_docs(-4),
 				["<C-f>"] = cmp.mapping.scroll_docs(4),
@@ -105,19 +108,21 @@ return {
 					behavior = cmp.ConfirmBehavior.Replace,
 				}),
 			}),
+
 			sources = cmp.config.sources({
-				{ name = "supermaven", priority = 1000 }, -- Highest priority
+				{ name = "supermaven", priority = 1000 },
 				{ name = "nvim_lsp", priority = 900 },
 				{ name = "luasnip", priority = 800 },
 				{ name = "buffer", priority = 700 },
 				{ name = "path", priority = 600 },
 			}),
+
 			formatting = {
 				format = lspkind.cmp_format({
 					mode = "symbol_text",
 					maxwidth = 50,
 					ellipsis_char = "...",
-					symbol_map = { Supermaven = " " }, -- Custom icon
+					symbol_map = { Supermaven = " " },
 					menu = {
 						supermaven = "[SM]",
 						nvim_lsp = "[LSP]",
@@ -127,14 +132,14 @@ return {
 					},
 				}),
 			},
+
+			-- 🚨 FIX: ghost text MUST be boolean. This stops the crash.
 			experimental = {
-				ghost_text = {
-					hl_group = "Comment", -- Less distracting ghost text
-				},
+				ghost_text = false,
 			},
 		})
 
-		-- Smart Supermaven management
+		-- Supermaven auto start/stop
 		local api = require("supermaven-nvim.api")
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "*",
@@ -152,7 +157,6 @@ return {
 			end,
 		})
 
-		-- Toggle command
 		vim.api.nvim_create_user_command("SupermavenToggle", function()
 			if api.is_running() then
 				api.stop()
@@ -164,3 +168,4 @@ return {
 		end, {})
 	end,
 }
+
