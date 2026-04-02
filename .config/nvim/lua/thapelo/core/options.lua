@@ -42,12 +42,3 @@ opt.splitbelow = true -- split horizontal window to the bottom
 
 -- turn off swapfile
 opt.swapfile = false
-
-
--- Disagnostic
-		vim.diagnostic.config({
-			virtual_text = true,
-			--virtual_text = true,
-			virtual_lines = true,
-			--underline = true,
-		})

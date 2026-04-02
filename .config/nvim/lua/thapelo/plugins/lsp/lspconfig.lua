@@ -11,7 +11,10 @@ return {
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 		local mason = require("mason") -- ✨ NEW
 		local mason_lspconfig = require("mason-lspconfig")
-		local keymap = vim.keymap
+
+		vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+		vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
+		vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
 
 		mason.setup() -- ✨ NEW
 

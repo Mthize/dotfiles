@@ -1,44 +1,48 @@
 return {
 	"craftzdog/solarized-osaka.nvim",
-	lazy = false, -- Load the colorscheme at startup
-	priority = 1000, -- Ensure it loads before other plugins
+	lazy = false,
+	priority = 1000,
 	opts = {
-		transparent = true, -- Enable transparent background
-		terminal_colors = true, -- Set terminal colors
+		transparent = true,
+		terminal_colors = true,
 		styles = {
 			comments = { italic = true },
 			keywords = { italic = true },
 			functions = { italic = false },
 			variables = {},
-			sidebars = "dark", -- Set dark backgrounds for sidebars
-			floats = "dark", -- Set dark backgrounds for floating windows
+			sidebars = "dark",
+			floats = "dark",
 		},
-		sidebars = { "qf", "help" }, -- Specify which sidebars to apply the dark style to
+		sidebars = { "qf", "help" },
 		day_brightness = 0.3,
 		hide_inactive_statusline = false,
 		dim_inactive = false,
 		lualine_bold = false,
 
-		on_colors = function(colors)
-			-- You can add custom color overrides here if needed
-		end,
-
-		-- ADDED THIS SECTION TO FIX DASHBOARD COLORS
 		on_highlights = function(hl, c)
-			-- This assumes a dashboard plugin like alpha-nvim or dashboard-nvim.
-			-- Highlight for the main text like "Find files"
-			hl.DashboardLabel = { fg = c.yellow, bold = true }
-			-- Highlight for the shortcut keys like "f"
-			hl.DashboardShortCut = { fg = c.orange }
+			-- Map AlphaButtons to Solarized Green (#859900)
+			hl.AlphaButtons = { fg = c.green, bold = true }
+			-- Map AlphaShortcut to Solarized Cyan (#2aa198)
+			hl.AlphaShortcut = { fg = c.cyan }
 
-			-- Fallbacks for alpha-nvim
-			hl.AlphaButtons = { fg = c.yellow, bold = true }
-			hl.AlphaShortcut = { fg = c.orange }
+			-- Ensure Dashboard highlights match if used
+			hl.DashboardLabel = { fg = c.green, bold = true }
+			hl.DashboardShortCut = { fg = c.cyan }
 		end,
 	},
 	config = function(_, opts)
-		require("solarized-osaka").setup(opts)
-		-- Load the colorscheme
+		local solarized = require("solarized-osaka")
+		solarized.setup(opts)
 		vim.cmd.colorscheme("solarized-osaka")
+
+		-- Persistence: Reapply highlights on ColorScheme change
+		vim.api.nvim_create_autocmd("ColorScheme", {
+			pattern = "solarized-osaka",
+			callback = function()
+				local c = require("solarized-osaka.colors").setup()
+				vim.api.nvim_set_hl(0, "AlphaButtons", { fg = c.green, bold = true })
+				vim.api.nvim_set_hl(0, "AlphaShortcut", { fg = c.cyan })
+			end,
+		})
 	end,
 }

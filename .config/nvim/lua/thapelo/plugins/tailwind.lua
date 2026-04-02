@@ -9,12 +9,12 @@ return {
 	},
 	{
 		"NvChad/nvim-colorizer.lua",
-		opts = function()
-			local user_default_options = {
+		opts = {
+			parsers = {
 				tailwindcss = true,
-			}
-			return user_default_options
-		end,
+			},
+			suppress_deprecation = true,
+		},
 	},
 	{
 		"hrsh7th/nvim-cmp",
