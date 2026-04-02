@@ -4,7 +4,7 @@
 
 export ZSH="$HOME/.oh-my-zsh"
 
-ZSH_THEME="agnosterzak"
+ZSH_THEME="alanpeabody"
 
 plugins=(
 	git zsh-autosuggestions 
@@ -33,6 +33,7 @@ alias l='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
+alias rovodev='./acli rovodev run'
 
 # Set-up FZF key bindings (CTRL R for fuzzy history finder)
 source <(fzf --zsh)
@@ -79,18 +80,14 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-
 # Pyenv 
 export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-
 #virtualenv-init
 eval "$(pyenv virtualenv-init -)"
-
-
 
 # pnpm
 export PNPM_HOME="/home/thapelo/.local/share/pnpm"
@@ -99,3 +96,17 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+export PATH=$PATH:/home/thapelo/.spicetify
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init - zsh)"
+export PATH="$HOME/.local/bin:$PATH"
+
+# Atuin Config
+export ATUIN_TMUX_POPUP=true
+export ATUIN_NOBIND="true"
+
+eval "$(atuin init zsh)"
+
+# Ctrl-r -> Atuin search in vi insert mode
+bindkey '^r' atuin-search-viins
