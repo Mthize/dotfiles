@@ -62,10 +62,6 @@ return {
 			button.opts.hl_shortcut = "AlphaShortcut"
 		end
 
-		-- FIX: Link to more colorful, standard highlight groups
-		vim.api.nvim_set_hl(0, "AlphaButtons", { link = "Type" }) -- Changed from "Identifier"
-		vim.api.nvim_set_hl(0, "AlphaShortcut", { link = "Special" }) -- Changed from "Statement"
-
 		dashboard.section.header.opts.hl = "Statement"
 		dashboard.section.buttons.opts.hl = "Identifier"
 		dashboard.section.footer.opts.hl = "Statement"
@@ -81,6 +77,9 @@ return {
 				elseif vim.g.colors_name == "solarized-osaka" then
 					dashboard.section.header.opts.hl = "Statement"
 					dashboard.section.footer.opts.hl = "Statement"
+				elseif vim.g.colors_name == "everforest" then
+					dashboard.section.header.opts.hl = "AlphaHeader"
+					dashboard.section.footer.opts.hl = "AlphaFooter"
 				else
 					dashboard.section.header.opts.hl = "Function"
 					dashboard.section.footer.opts.hl = "Function"

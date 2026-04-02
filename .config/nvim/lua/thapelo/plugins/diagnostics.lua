@@ -1,15 +1,16 @@
 -- ~/.config/nvim/lua/config/diagnostics.lua
 ---@type LazyPluginSpec
 return {
+	-- Configure diagnostics (LSP loaded in lspconfig.lua)
 	"neovim/nvim-lspconfig",
-	event = { "BufReadPre", "BufNewFile" }, -- load on buffer open
+	lazy = true,
 	config = function()
 		vim.diagnostic.config({
-			virtual_text = true, -- show inline errors
-			virtual_lines = true, -- show multi-line virtual diagnostics
-			-- underline = true,       -- optional
-			update_in_insert = false, -- don’t update diagnostics while typing
-			severity_sort = true, -- sort by severity
+			virtual_text = true,
+			virtual_lines = false,
+			underline = true,
+			update_in_insert = false,
+			severity_sort = true,
 		})
 	end,
 }

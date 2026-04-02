@@ -8,12 +8,13 @@ return {
 		opts = {
 			-- 5. Easily customizable symbols for git signs.
 			signs = {
-				add = { text = "▍" }, -- vertical bar
-				change = { text = "▌" }, -- thicker vertical bar
-				delete = { text = "契" }, -- fancy cross / delete symbol
-				topdelete = { text = "契" },
-				changedelete = { text = "▎" }, -- smaller vertical bar
-			},
+        add          = { text = "│" }, -- Thin line
+        change       = { text = "│" }, -- Matching thin line
+        delete       = { text = "_" }, -- Subtle bottom bar
+        topdelete    = { text = "‾" }, -- Subtle top bar
+        changedelete = { text = "~" }, -- Tilde for changed-deletes
+        untracked    = { text = "┆" }, -- Dashed line for new files
+      },
 			signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
 			numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
 			linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
