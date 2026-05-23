@@ -44,7 +44,7 @@ SAVEHIST=10000
 setopt appendhistory
 
 
-export POSH_THEMES_PATH="$HOME/.poshthemes"
+export POSH_THEMES_PATH="/usr/share/oh-my-posh/themes/"
 eval "$(oh-my-posh init zsh --config $POSH_THEMES_PATH/sonicboom_dark.omp.json)"
 
 

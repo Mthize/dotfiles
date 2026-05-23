@@ -8,6 +8,7 @@ return {
   config = function()
     -- import nvim-treesitter plugin
     local treesitter = require("nvim-treesitter.configs")
+    require("thapelo.treesitter_compat")
 
     -- configure treesitter
     treesitter.setup({ -- enable syntax highlighting
