@@ -1,0 +1,37 @@
+[
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      "j k": "vim::NormalBefore"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal && !menu",
+    "bindings": {
+      "space s v": "pane::SplitRight",
+      "space s h": "pane::SplitDown",
+      "space s x": "pane::CloseActiveItem",
+      "space t x": "pane::CloseActiveItem",
+      "space t n": "pane::ActivateNextItem",
+      "space t p": "pane::ActivatePreviousItem",
+      "space t t": "terminal_panel::ToggleFocus",
+      "space f f": "file_finder::Toggle",
+      "space f g": "pane::DeploySearch",
+      "space e": "project_panel::ToggleFocus",
+      "space c a": "editor::ToggleCodeActions",
+      "space c r": "editor::Rename",
+      "space g s": "git_panel::ToggleFocus",
+      "space a a": "agent::ToggleFocus",
+      "space c d": "diagnostics::Deploy"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight"
+    }
+  }
+]
